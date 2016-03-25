@@ -2,7 +2,7 @@
 
 body {
   /* Browsers have default 8px margins _or_ padding! */
-  margin: 8px;
+  margin: 0;
   padding: 0;
   font-size: 100%;
   /* See: http://www.informationarchitects.jp/en/100e2r/ */
@@ -216,21 +216,35 @@ footer p a:link:hover {
 /* Specific styles */
 
 h1 {
-  color: #2196f3;
-  font-weight: 400;
-  margin: 0.4em 0 0 0;
-  text-align: center;
+    background-color: #2196f3;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 400;
+    margin: 0;
+    padding: 10px 15px 5px;
+}
+
+div#logo {
+    width: 85px;
+    height: 85px;
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    background: rgba(0, 0, 0, 0) url("../images/jensen-silo-circle-small.png") no-repeat scroll center center / 50% 50%;
+    opacity: 0.85;
 }
 
 h2 {
-  color: #4caf50;
-  font-weight: 400;
-  margin: 0.3em 0 0;
-  text-align: center;
+    background-color: #2196f3;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 400;
+    margin: 0;
+    padding: 0 15px 15px 15px;
+    border-bottom: 2px solid #01579b;
 }
 
 h3 {
-  color: black;
+  color: #388e3c;
   font-weight: 300;
   margin: 0.3em 0 0;
 }
@@ -239,9 +253,20 @@ textarea {
     font-family: 'Source Code Pro', monospace;
     width: 100%;
     height: 250px;
-    font-size: 8pt;
+    font-size: 9pt;
     font-weight: 400;
-    border: 1px solid #bbb;
+    border: 1px solid #cfd8dc;
+    display: inline-block;
+    background-color: #eceff1;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+textarea:focus {
+    border-color: black;
+}
+
+textarea.bad {
+    border: 1px solid #b71c1c;
 }
 
 div#controlPanel {
@@ -265,10 +290,42 @@ button {
 button:hover {
     background-color: #eceff1;
 }
+
 p#message {
-    color: #333;
-    font-size: 10pt;
+    color: #263238;
+    font-size: 12pt;
 }
+
 p#message.error {
-    color: red;
+    color: #f44336;
+}
+
+p#message.good {
+    color: #388e3c;
+}
+
+div#container {
+    padding: 10px;
+}
+
+div#container div {
+    display: inline-block;
+    margin: 10px;
+    width: 48%;
+}
+
+@media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 568px) {
+    div#container div {
+        width: 97%;
+    }
+}
+
+@media only screen
+    and (min-device-width : 375px)
+    and (max-device-width : 667px) {
+        div#container div {
+            width: 97%;
+        }
 }
