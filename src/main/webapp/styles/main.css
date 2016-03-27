@@ -261,8 +261,9 @@ textarea {
     color: rgba(0, 0, 0, 0.85);
 }
 
-textarea:focus {
+textarea:focus, input:focus {
     border-color: black;
+    background-color: rgba(255,255,204,0.85);
 }
 
 textarea.bad {
