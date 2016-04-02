@@ -155,7 +155,7 @@ require(['augmented', 'augmentedPresentation'], function(Augmented, Presentation
 
     var ControlPanelView = Augmented.Presentation.Colleague.extend({
         el: "#controlPanel",
-        template: "<button id=\"validate\">Validate</button><button id=\"reset\">Reset</button><button id=\"generateSchema\">Generate Schema</button>",
+        template: "<button id=\"validate\" class=\"primary\">Validate</button><button id=\"reset\">Reset</button><button id=\"generateSchema\">Generate Schema</button>",
         events: {
             "click button#validate": function() {
                 this.sendMessage("mainEvent", "validate");

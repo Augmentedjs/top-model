@@ -213,8 +213,6 @@ footer p a:link:hover {
   text-decoration: underline;
 }
 
-/* Specific styles */
-
 header {
     background-color: #2196f3;
     box-shadow: 0 1px 3px 5px rgba(0, 0, 0, 0.2);
@@ -253,13 +251,12 @@ h2 {
     font-weight: 400;
     margin: 0;
     padding: 0 15px 15px 15px;
-    border-bottom: 2px solid #01579b;
 }
 
 h3 {
   color: #388e3c;
   font-weight: 300;
-  margin: 0.3em 0 0;
+  margin: 0.3em 0 5px;
 }
 
 input, textarea {
@@ -271,7 +268,7 @@ input, textarea {
     border: 1px solid #cfd8dc;
     background-color: #eceff1;
     color: rgba(0, 0, 0, 0.85);
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
 
 textarea {
@@ -294,28 +291,63 @@ textarea.bad {
 }
 
 div#controlPanel {
-    background-color: #eceff1;
+    /*background-color: #eceff1;*/
     margin-bottom: 10px;
     margin-top: 10px;
     padding-bottom: 10px;
     padding-top: 10px;
-    border: 1px solid #cfd8dc;
+    /*border: 1px solid #cfd8dc;*/
     color: rgba(0, 0, 0, 0.85);
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    /*box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);*/
 }
 
 button {
-    background-color: #cfd8dc;
-    color: rgba(0, 0, 0, 0.85);
-    border: 1px solid #607d8b;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    margin-right: 0;
+    background-color: white;
+    border: 1px solid #cfd8dc;
+    border-radius: 2px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 10pt;
+    font-weight: 400;
+    height: 36px;
+    line-height: 0;
     margin-left: 10px;
-    padding: 5px;
+    margin-right: 0;
+    padding: 12px 16px;
+    text-transform: uppercase;
 }
 
 button:hover {
     background-color: #eceff1;
+    border: 1px solid #b0bec5;
+}
+
+button:active {
+    background-color: #cfd8dc;
+}
+
+button.primary {
+    background-color: #2196f3;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 10pt;
+    font-weight: 400;
+    height: 36px;
+    line-height: 0;
+    margin-left: 10px;
+    margin-right: 0;
+    padding: 12px 16px;
+    text-transform: uppercase;
+}
+
+button.primary:hover {
+    background-color: #1e88e5;
+}
+
+button.primary:active {
+    background-color: #1976d2;
 }
 
 p#message {
@@ -345,14 +377,43 @@ div#container div {
     and (min-device-width: 320px)
     and (max-device-width: 568px) {
     div#container div {
-        width: 97%;
+        width: 95%;
+    }
+    section#main input, section#main textarea {
+        width: 95%;
+    }
+
+    header h1 {
+        font-size: 18pt;
+        max-width: 70%;
+    }
+
+    header h2 {
+        font-size: 12pt;
+        max-width: 70%;
     }
 }
+
+/* iPhone 6 */
 
 @media only screen
     and (min-device-width : 375px)
     and (max-device-width : 667px) {
-        div#container div {
-            width: 97%;
-        }
+
+    section#main input, section#main textarea {
+        width: 95%;
+    }
+    div#container div {
+        width: 95%;
+    }
+
+    header h1 {
+        font-size: 18pt;
+        max-width: 70%;
+    }
+
+    header h2 {
+        font-size: 12pt;
+        max-width: 70%;
+    }
 }
