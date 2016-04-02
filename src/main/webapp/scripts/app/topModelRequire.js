@@ -7,35 +7,38 @@ require.config({
 		'backbone': 'lib/backbone-min',
 
         // hosted version
-		//'augmented': '/augmented/scripts/core/augmented',
-        //'augmentedPresentation': '/augmented/scripts/presentation/augmentedPresentation'
+		'augmented': '/augmented/scripts/core/augmented',
+        'augmentedPresentation': '/augmented/scripts/presentation/augmentedPresentation'
 
         // local version
-		'augmented': 'lib/augmented',
-        'augmentedPresentation': 'lib/augmentedPresentation'
+		//'augmented': 'lib/augmented',
+        //'augmentedPresentation': 'lib/augmentedPresentation'
 	}
 });
 
 require(['augmented', 'augmentedPresentation'], function(Augmented, Presentation) {
     "use strict";
     var app = new Augmented.Presentation.Application("Top Model");
+    //app.registerStylesheet("styles/main.css");
     app.registerStylesheet("https://fonts.googleapis.com/css?family=Work+Sans:300,400");
     app.registerStylesheet("https://fonts.googleapis.com/css?family=Source+Code+Pro:400");
-    app.registerStylesheet("styles/main.css");
     app.start();
 
     var MainView = Augmented.Presentation.Mediator.extend({
         el: "#main",
-        template: "<div id=\"logo\"></div><h1>Augmented “Top Model”</h1><h2>Easy Model Validation</h2><div id=\"container\"><div><h3>JSON Schema (Draft 4)</h3><textarea id=\"schema\"></textarea></div><div><h3>Model JSON Data</h3><textarea id=\"model\"></textarea></div><p id=\"message\"></p></div><div id=\"controlPanel\"></div>",
+        template: "",
         events: {
             "change textarea#schema": function(event) {
                 var m = event.target;
                 if (m) {
                     try {
                         var data = JSON.parse(m.value);
-                        this.schema = data;
+                        this.model.schema = data;
                         this.showMessage("Updated schema.");
                         m.setAttribute("class", "good");
+
+                        m.value = Augmented.Utility.PrettyPrint(data);
+
                     } catch(e) {
                         this.showError("Could Not parse schema!");
                         m.setAttribute("class", "bad");
@@ -47,9 +50,12 @@ require(['augmented', 'augmentedPresentation'], function(Augmented, Presentation
                 if (m) {
                     try {
                         var data = JSON.parse(m.value);
-                        this.model.set(data);
+                        this.model.reset(data);
                         this.showMessage("Updated model data.");
                         m.setAttribute("class", "good");
+
+                        m.value = Augmented.Utility.PrettyPrint(data);
+
                     } catch(e) {
                         this.showError("Could Not parse model data!");
                         m.setAttribute("class", "bad");
@@ -83,20 +89,36 @@ require(['augmented', 'augmentedPresentation'], function(Augmented, Presentation
             }
         },
         init: function() {
+            this.model = new Augmented.Model();
             this.on('mainEvent',
                 function(message) {
                     if (message === "validate") {
                         this.validate();
                     } else if (message === "reset") {
                         this.reset();
+                    } else if (message === "generateSchema") {
+                        this.generateSchema();
                     }
                 }
             );
+            //this.model.on("change:schema", this.renderSchemaFromModel);
             this.model = new Augmented.Model();
         },
+        renderSchemaFromModel: function() {
+            var m = document.getElementById("schema");
+            m.value = Augmented.Utility.PrettyPrint(this.model.schema);
+        },
+        generateSchema: function() {
+            if (this.model) {
+                var schema = Augmented.ValidationFramework.generateSchema(this.model.toJSON());
+                if (schema) {
+                    this.model.schema = schema;
+                    this.renderSchemaFromModel();
+                }
+            }
+        },
         validate: function() {
-            if (this.model && this.schema) {
-                this.model.schema = this.schema;
+            if (this.model && this.model.schema) {
 
                 if (this.model.isValid()) {
                     this.showMessage("Validation: ✔ Model is valid!", true);
@@ -117,9 +139,9 @@ require(['augmented', 'augmentedPresentation'], function(Augmented, Presentation
             return html;
         },
         render: function() {
-            if (this.el) {
+            /*if (this.el) {
                 this.el.innerHTML = this.template;
-            }
+            }*/
             this.showMessage("Ready");
             return this;
         }
@@ -133,7 +155,7 @@ require(['augmented', 'augmentedPresentation'], function(Augmented, Presentation
 
     var ControlPanelView = Augmented.Presentation.Colleague.extend({
         el: "#controlPanel",
-        template: "<button id=\"validate\">Validate</button><button id=\"reset\">Reset</button>",
+        template: "<button id=\"validate\">Validate</button><button id=\"reset\">Reset</button><button id=\"generateSchema\">Generate Schema</button>",
         events: {
             "click button#validate": function() {
                 this.sendMessage("mainEvent", "validate");
@@ -141,6 +163,9 @@ require(['augmented', 'augmentedPresentation'], function(Augmented, Presentation
             "click button#reset": function() {
                 this.sendMessage("mainEvent", "reset");
             },
+            "click button#generateSchema": function() {
+                this.sendMessage("mainEvent", "generateSchema");
+            }
         },
         render: function() {
             if (this.el) {
