@@ -2,25 +2,24 @@ require.config({
 	'baseUrl': 'scripts/',
 
     'paths': {
-		'jquery': 'lib/jquery-2.1.4.min',
+		'jquery': 'lib/jquery.min',
 		'underscore': 'lib/lodash.min',
 		'backbone': 'lib/backbone-min',
 
         // hosted version
-		'augmented': '/augmented/scripts/core/augmented',
-        'augmentedPresentation': '/augmented/scripts/presentation/augmentedPresentation'
+		//'augmented': '/augmented/scripts/core/augmented',
+        //'augmentedPresentation': '/augmented/scripts/presentation/augmentedPresentation'
 
         // local version
-		//'augmented': 'lib/augmented',
-        //'augmentedPresentation': 'lib/augmentedPresentation'
+		'augmented': 'lib/augmented',
+        'augmentedPresentation': 'lib/augmentedPresentation'
 	}
 });
 
 require(['augmented', 'augmentedPresentation'], function(Augmented, Presentation) {
     "use strict";
     var app = new Augmented.Presentation.Application("Top Model");
-    //app.registerStylesheet("styles/main.css");
-    app.registerStylesheet("https://fonts.googleapis.com/css?family=Work+Sans:300,400");
+    app.registerStylesheet("https://fonts.googleapis.com/css?family=Roboto:300,400");
     app.registerStylesheet("https://fonts.googleapis.com/css?family=Source+Code+Pro:400");
     app.start();
 
@@ -101,8 +100,6 @@ require(['augmented', 'augmentedPresentation'], function(Augmented, Presentation
                     }
                 }
             );
-            //this.model.on("change:schema", this.renderSchemaFromModel);
-            this.model = new Augmented.Model();
         },
         renderSchemaFromModel: function() {
             var m = document.getElementById("schema");
@@ -139,9 +136,6 @@ require(['augmented', 'augmentedPresentation'], function(Augmented, Presentation
             return html;
         },
         render: function() {
-            /*if (this.el) {
-                this.el.innerHTML = this.template;
-            }*/
             this.showMessage("Ready");
             return this;
         }
